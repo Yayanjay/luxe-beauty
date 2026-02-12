@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: luxe-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: luxe
+      POSTGRES_PASSWORD: luxe_secret
+      POSTGRES_DB: luxe_beauty
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  garage:
+    image: dxflrs/garage:v1.1.0
+    container_name: luxe-garage
+    restart: unless-stopped
+    ports:
+      - "3900:3900"
+      - "3902:3902"
+    volumes:
+      - ./garage.toml:/etc/garage.toml
+      - garage_data:/var/lib/garage/data
+      - garage_meta:/var/lib/garage/meta
+
+  # Web UI for Garage S3 management
+  # Access at http://localhost:3909
+  garage-webui:
+    image: khairul169/garage-webui:latest
+    container_name: luxe-garage-webui
+    restart: unless-stopped
+    ports:
+      - "3909:3909"
+    volumes:
+      - ./garage.toml:/etc/garage.toml:ro
+    depends_on:
+      - garage
+
+volumes:
+  postgres_data:
+  garage_data:
+  garage_meta:

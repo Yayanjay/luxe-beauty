@@ -1,0 +1,32 @@
+{
+  "name": "luxe-beauty-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Luxe Beauty Storefront — Vue 3 + Vite",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "vue": "^3.5.28",
+    "vue-router": "^5.0.2",
+    "pinia": "^3.0.4",
+    "axios": "^1.13.5",
+    "@vueuse/core": "^14.2.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.4",
+    "vite": "^7.3.1",
+    "vue-tsc": "^3.2.4",
+    "typescript": "^5.9.3",
+    "tailwindcss": "^4.1.18",
+    "@tailwindcss/vite": "^4.1.18",
+    "eslint": "^9.28.0",
+    "@types/node": "^25.2.3",
+    "esbuild": "^0.25.0",
+    "@vue/tsconfig": "^0.7.0"
+  }
+}
