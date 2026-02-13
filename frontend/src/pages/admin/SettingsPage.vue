@@ -29,7 +29,7 @@ const saving = ref(false);
 const saved = ref(false);
 
 onMounted(async () => {
-  const { data } = await apiClient.get('/api/admin/settings');
+  const { data } = await apiClient.get('/admin/settings');
   settings.value = data;
   loading.value = false;
 });
@@ -37,7 +37,7 @@ onMounted(async () => {
 async function saveSettings(): Promise<void> {
   saving.value = true;
   try {
-    await apiClient.patch('/api/admin/settings', settings.value);
+    await apiClient.patch('/admin/settings', settings.value);
     notificationStore.success('Settings saved!');
     saved.value = true;
     setTimeout(() => { saved.value = false; }, 3000);

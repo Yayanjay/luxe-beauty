@@ -35,18 +35,18 @@ export interface OrderItem {
 
 export const ordersApi = {
   create: (shippingAddress: ShippingAddress, notes?: string) =>
-    apiClient.post<Order>('/api/orders', { shippingAddress, notes }).then((r) => r.data),
+    apiClient.post<Order>('/orders', { shippingAddress, notes }).then((r) => r.data),
 
   list: (params?: { page?: number; limit?: number }) =>
-    apiClient.get<{ data: Order[]; total: number }>('/api/orders', { params }).then((r) => r.data),
+    apiClient.get<{ data: Order[]; total: number }>('/orders', { params }).then((r) => r.data),
 
   getById: (id: string) =>
-    apiClient.get<Order>(`/api/orders/${id}`).then((r) => r.data),
+    apiClient.get<Order>(`/orders/${id}`).then((r) => r.data),
 
   // Admin
   adminList: (params?: { page?: number; limit?: number; status?: string }) =>
-    apiClient.get('/api/admin/orders', { params }).then((r) => r.data),
+    apiClient.get('/admin/orders', { params }).then((r) => r.data),
 
   adminUpdateStatus: (id: string, status: string) =>
-    apiClient.patch(`/api/admin/orders/${id}/status`, { status }).then((r) => r.data),
+    apiClient.patch(`/admin/orders/${id}/status`, { status }).then((r) => r.data),
 };

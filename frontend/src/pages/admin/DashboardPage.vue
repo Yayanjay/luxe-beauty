@@ -61,7 +61,7 @@ function formatPrice(price: string): string {
 
 onMounted(async () => {
   try {
-    const { data } = await apiClient.get('/api/admin/dashboard');
+    const { data } = await apiClient.get('/admin/dashboard');
     stats.value = data;
   } finally {
     loading.value = false;

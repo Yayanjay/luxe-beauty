@@ -72,7 +72,7 @@ const form = ref({ title: '', content: '', isPublished: false });
 
 async function fetchPages(): Promise<void> {
   loading.value = true;
-  const { data } = await apiClient.get('/api/admin/cms');
+  const { data } = await apiClient.get('/admin/cms');
   pages.value = data;
   loading.value = false;
 }
@@ -84,7 +84,7 @@ function openCreate(): void {
 
 async function createPage(): Promise<void> {
   try {
-    await apiClient.post('/api/admin/cms', form.value);
+    await apiClient.post('/admin/cms', form.value);
     notificationStore.success('Page created!');
     showModal.value = false;
     fetchPages();
@@ -96,7 +96,7 @@ async function createPage(): Promise<void> {
 async function deletePage(id: string): Promise<void> {
   if (!confirm('Delete this page?')) return;
   try {
-    await apiClient.delete(`/api/admin/cms/${id}`);
+    await apiClient.delete(`/admin/cms/${id}`);
     notificationStore.success('Page deleted');
     fetchPages();
   } catch {

@@ -1,6 +1,7 @@
 import {
   Controller,
   Post,
+  Query,
   UseGuards,
   UseInterceptors,
   UploadedFile,
@@ -24,8 +25,11 @@ export class UploadController {
   @Post('image')
   @UseInterceptors(FileInterceptor('file', { limits: { fileSize: 5 * 1024 * 1024 } }))
   @ApiConsumes('multipart/form-data')
-  @ApiOperation({ summary: '[Admin] Upload product image to S3' })
-  uploadImage(@UploadedFile() file: Express.Multer.File) {
-    return this.uploadService.uploadImage(file);
+  @ApiOperation({ summary: '[Admin] Upload image to S3' })
+  uploadImage(
+    @UploadedFile() file: Express.Multer.File,
+    @Query('folder') folder: string = 'products',
+  ) {
+    return this.uploadService.uploadImage(file, folder);
   }
 }

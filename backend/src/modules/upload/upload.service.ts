@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import type { Multer } from 'multer';
 import { randomUUID } from 'crypto';
 import * as path from 'path';
@@ -28,7 +28,10 @@ export class UploadService {
     this.publicUrl = config.get<string>('S3_PUBLIC_URL') ?? 'http://localhost:3900/luxe-beauty';
   }
 
-  async uploadImage(file: Express.Multer.File): Promise<{ url: string; key: string }> {
+  async uploadImage(
+    file: Express.Multer.File,
+    folder: string = 'products',
+  ): Promise<{ url: string; key: string }> {
     if (!ALLOWED_MIME_TYPES.includes(file.mimetype)) {
       throw new BadRequestException('Invalid file type. Only images are allowed.');
     }
@@ -37,7 +40,7 @@ export class UploadService {
     }
 
     const ext = path.extname(file.originalname).toLowerCase();
-    const key = `products/${randomUUID()}${ext}`;
+    const key = `${folder}/${randomUUID()}${ext}`;
 
     await this.s3.send(
       new PutObjectCommand({
@@ -45,10 +48,18 @@ export class UploadService {
         Key: key,
         Body: file.buffer,
         ContentType: file.mimetype,
-        ACL: 'public-read',
       }),
     );
 
     return { url: `${this.publicUrl}/${key}`, key };
+  }
+
+  async deleteImage(key: string): Promise<void> {
+    await this.s3.send(
+      new DeleteObjectCommand({
+        Bucket: this.bucket,
+        Key: key,
+      }),
+    );
   }
 }

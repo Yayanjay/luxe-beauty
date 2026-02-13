@@ -10,14 +10,14 @@ export interface Category {
 }
 
 export const categoriesApi = {
-  list: () => apiClient.get<Category[]>('/api/categories').then((r) => r.data),
-  getBySlug: (slug: string) => apiClient.get<Category>(`/api/categories/${slug}`).then((r) => r.data),
+  list: () => apiClient.get<Category[]>('/categories').then((r) => r.data),
+  getBySlug: (slug: string) => apiClient.get<Category>(`/categories/${slug}`).then((r) => r.data),
 
   adminCreate: (data: { name: string; image?: string; parentId?: string }) =>
-    apiClient.post<Category>('/api/admin/categories', data).then((r) => r.data),
+    apiClient.post<Category>('/admin/categories', data).then((r) => r.data),
 
   adminUpdate: (id: string, data: Partial<{ name: string; image: string; parentId: string }>) =>
-    apiClient.patch<Category>(`/api/admin/categories/${id}`, data).then((r) => r.data),
+    apiClient.patch<Category>(`/admin/categories/${id}`, data).then((r) => r.data),
 
-  adminDelete: (id: string) => apiClient.delete(`/api/admin/categories/${id}`),
+  adminDelete: (id: string) => apiClient.delete(`/admin/categories/${id}`),
 };

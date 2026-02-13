@@ -37,7 +37,7 @@ const loading = ref(true);
 
 onMounted(async () => {
   try {
-    const { data } = await apiClient.get('/api/admin/users');
+    const { data } = await apiClient.get('/admin/users');
     users.value = data.data;
   } finally {
     loading.value = false;

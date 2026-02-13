@@ -18,13 +18,13 @@ export interface AuthTokens {
 
 export const authApi = {
   login: (payload: LoginPayload) =>
-    apiClient.post<AuthTokens>('/api/auth/login', payload).then((r) => r.data),
+    apiClient.post<AuthTokens>('/auth/login', payload).then((r) => r.data),
 
   register: (payload: RegisterPayload) =>
-    apiClient.post<AuthTokens>('/api/auth/register', payload).then((r) => r.data),
+    apiClient.post<AuthTokens>('/auth/register', payload).then((r) => r.data),
 
-  me: () => apiClient.get('/api/auth/me').then((r) => r.data),
+  me: () => apiClient.get('/auth/me').then((r) => r.data),
 
   refresh: (userId: string, refreshToken: string) =>
-    apiClient.post<{ accessToken: string }>('/api/auth/refresh', { userId, refreshToken }).then((r) => r.data),
+    apiClient.post<{ accessToken: string }>('/auth/refresh', { userId, refreshToken }).then((r) => r.data),
 };
